@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Projekt symulacji</title>
+    <link rel="stylesheet" href="~/css/site.css"
+          asp-append-version="true" />
+    <script src="~/js/site.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Projekt symulacji</h1>
+        <nav>
+            <a asp-area="" asp-page="/Index" class="@(ViewContext.RouteData.Values["page"]?.ToString() == "/Index" ? "active" : "")">Informacje</a>
+            <a asp-area="" asp-page="/Simulation" class="@(ViewContext.RouteData.Values["page"]?.ToString() == "/Simulation" ? "active" : "")">Symulacja</a>
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+</body>
+</html>

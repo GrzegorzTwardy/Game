@@ -1,0 +1,25 @@
+﻿@page
+@model SimulationModel
+@{
+    ViewData["Title"] = "Simulation";
+}
+
+<h1>Symulacja</h1>
+
+<div class="turn-container">
+    <form method="post" asp-page-handler="Previous">
+        <button type="submit" @(Model.DisablePrev ? "disabled" : "")>Poprzednia tura</button>
+    </form>
+    <p>Tura: @Model.CurrentTurn</p>
+    <form method="post" asp-page-handler="Next">
+        <button type="submit" @(Model.DisableNext ? "disabled" : "")>Następna tura</button>
+    </form>
+</div>
+
+
+<div class="map-container">
+    @Html.Raw(Model.CurrentMap)
+</div>
+<div class="turn-container">
+    <p>@Model.MovementInfo</p>
+</div>

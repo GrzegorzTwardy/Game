@@ -1,0 +1,22 @@
+            //foreach (char sym in _history.TurnLogs[CurrentTurn].Symbols.Values)
+            //{
+            //    string cellSymbol = "";
+            //    if (string.IsNullOrEmpty(sym.ToString().Trim()))
+            //        cellSymbol = "blank";
+            //    else if (sym.ToString() == "b")
+            //        cellSymbol = "pn";
+            //    else if (sym.ToString() == "B")
+            //        cellSymbol = "pl";
+            //    else cellSymbol = sym.ToString();
+
+            //    if (cellSymbol!="blank")
+            //    {
+            //        string img = $"<img src=\"/css/{cellSymbol}.png\">";
+            //        CurrentMap += $"<div class='cell'>{img}</div>";
+            //    }
+            //    else
+            //    {
+            //        CurrentMap += "<div class='cell'></div>";
+            //    }
+
+            //}
