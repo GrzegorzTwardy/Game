@@ -11,15 +11,18 @@ public class Player : Creature
     public override int Resistance
     {
         get { return 8*Level; }
+        set { }
     }
 
     public override int Power
     {
         get { return 8 * Level; }
+        set { }
     }
     public override int Hp
     {
         get { return 7 * Level; }
+        set { }
     }
 
     public int Exp

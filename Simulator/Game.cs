@@ -1,6 +1,7 @@
 ﻿using Simulator.Maps;
 using System;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,7 +53,7 @@ public class Game
             if (currentTurn > 0 && currentTurn % 10 == 0)
             {
                 Random random = new Random();
-                List<IMappable> mobsToSpawn = [new Orc("Gorbag", level: P.Level), new Goblin("Elandor", level: P.Level)];
+                List<IMappable> mobsToSpawn = [new Mob("Elandor", level: P.Level)];
                 int mobIndex = random.Next(mobsToSpawn.Count);
                 int x = random.Next(0, 7);
                 int y = random.Next(0, 5);
@@ -67,11 +68,9 @@ public class Game
                 Mappables.Add(mobsToSpawn[mobIndex]);
             }
 
-            //Console.Clear();
             // NEXT TURN
 
             Console.WriteLine($"TURN: {currentTurn}");
-            currentTurn++;
             this.Visualize();
             Console.WriteLine("q - wyjdź");
             Console.Write("Podaj ruch (r/l/u/d): ");
@@ -98,6 +97,11 @@ public class Game
                     inputFlag = false;
                     break;
             }
+            
+            FightCheck();
+
+            currentTurn++;
+
             Console.WriteLine($"TURN: {currentTurn}");
             Console.WriteLine("======================= PLAYER MOVE =====================");
 
@@ -110,11 +114,117 @@ public class Game
             inputFlag = true;
             currentTurn++;
 
-            // jakas funckja co sprawdza czy gracz i mob sa na tym samaym polu
-
         }
         return 0;
     }
+
+
+    public void FightCheck()
+    {
+        List<Mob> mobsOnPlayer = new();
+        string playersChoice = "";
+
+        // Find mobs on the player's position
+        for (int i = 0; i < Mappables.Count; i++)
+        {
+            if (Mappables[i].Position.X == P.Position.X && Mappables[i].Position.Y == P.Position.Y)
+            {
+                if (Mappables[i] is Mob M)
+                    mobsOnPlayer.Add(M);
+            }
+        }
+
+        if (mobsOnPlayer.Count > 0)
+        {
+            Console.WriteLine("--------- FIGHT INITIATED ---------");
+
+            while (true)
+            {
+                Visualize();
+                Console.Write("Press 'r/l/u/d' to escape or 'f' to keep fighting: ");
+                playersChoice = Console.ReadLine();
+
+                // Handle escape
+                if (playersChoice == "r" || playersChoice == "l" || playersChoice == "u" || playersChoice == "d")
+                {
+                    Console.WriteLine("You escaped the fight!");
+
+                    foreach (var mob in mobsOnPlayer)
+                    {
+                        // Mob rusza się w przeciwną stronę
+                        switch (playersChoice)
+                        {
+                            case "r": // Gracz w prawo, mob w lewo
+                                P.Go(Direction.Right);
+                                mob.Go(Direction.Left);
+                                break;
+                            case "l": // Gracz w lewo, mob w prawo
+                                P.Go(Direction.Left);
+                                mob.Go(Direction.Right);
+                                break;
+                            case "u": // Gracz w górę, mob w dół
+                                P.Go(Direction.Up);
+                                mob.Go(Direction.Down);
+                                break;
+                            case "d": // Gracz w dół, mob w górę
+                                P.Go(Direction.Down);
+                                mob.Go(Direction.Up);
+                                break;
+                        }
+                    }
+                    break;
+                }
+
+                // Handle fight
+                if (playersChoice == "f")
+                {
+                    for (int i = mobsOnPlayer.Count - 1; i >= 0; i--) // Iterate backward for safe removal
+                    {
+                        Mob mob = mobsOnPlayer[i];
+                        Console.WriteLine($"Player HP: {P.Hp}, Mob HP: {mob.Hp}");
+
+                        if (mob.Hp > 0)
+                        {
+                            mob.Hp -= P.Power;
+                            Console.WriteLine($"You hit the mob! Mob HP is now {mob.Hp}");
+                        }
+
+                        if (mob.Hp <= 0)
+                        {
+                            Console.WriteLine("You defeated a mob!");
+                            Map.Remove(mob, mob.Position);
+                            Mappables.Remove(mob);
+                            mobsOnPlayer.RemoveAt(i);
+                        }
+
+                        if (P.Hp > 0 && mob.Hp > 0) // Mob attacks back only if alive
+                        {
+                            P.Hp -= mob.Power;
+                            Console.WriteLine($"The mob hit you! Your HP is now {P.Hp}");
+                        }
+
+                        if (P.Hp <= 0)
+                        {
+                            Console.WriteLine("Game over! You have been defeated.");
+                            Map.Remove(P, P.Position);
+                            return; // Exit the method entirely
+                        }
+                    }
+
+                    if (mobsOnPlayer.Count == 0)
+                    {
+                        Console.WriteLine("You defeated all mobs!");
+                        break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Unknown command. Please try again.");
+                }
+            }
+        }
+    }
+
 
     public void MoveMobs()
     {

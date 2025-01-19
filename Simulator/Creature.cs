@@ -35,9 +35,9 @@ public abstract class Creature : IMappable
         }
     }
 
-    public abstract int Power { get; }
-    public abstract int Resistance { get; }
-    public abstract int Hp { get; }
+    public abstract int Power { get; set; }
+    public abstract int Resistance { get; set; }
+    public abstract int Hp { get; set; }
 
     public abstract string Info { get; }
 
