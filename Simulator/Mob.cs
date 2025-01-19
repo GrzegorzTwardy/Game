@@ -26,7 +26,7 @@ public class Mob : Creature
 
     public Mob(string name, int level = 1) : base(name, level)
     {
-        _hp = 50 * level; // Inicjalizacja HP na podstawie poziomu
+        _hp = 5 * level; // Inicjalizacja HP na podstawie poziomu
     }
 
     public Mob() : base("Unknown Goblin", 1) { }

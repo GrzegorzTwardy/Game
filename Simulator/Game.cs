@@ -195,6 +195,8 @@ public class Game
                             Map.Remove(mob, mob.Position);
                             Mappables.Remove(mob);
                             mobsOnPlayer.RemoveAt(i);
+                            P.Exp += mob.Level * 20;
+                            Console.WriteLine($"You gained {mob.Level * 20} exp. Your current exp is {P.Exp}/100");
                         }
 
                         if (P.Hp > 0 && mob.Hp > 0) // Mob attacks back only if alive
