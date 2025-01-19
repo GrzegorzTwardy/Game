@@ -20,11 +20,13 @@ public class Game
         Mappables = mappables ?? throw new ArgumentNullException(nameof(mappables));
         Positions = points;
 
+        // dodanie gracza i mobow do mapy
         for (int i = 0; i < mappables.Count; i++)
         {
             Mappables[i].InitMapandPosition(Map, Positions[i]);
         }
-
+        
+        // gracz jest na indeksie 0
         if (Mappables[0] is Player player)
         {
             P = player;
@@ -39,10 +41,37 @@ public class Game
     {
         string userInput = "";
         bool inputFlag = true;
+        int currentTurn = 0;
 
         while (userInput != "q".ToLower())
         {
-            Console.Clear();
+            if (currentTurn != 0)
+                Console.WriteLine("======================= MOB MOVE =====================");
+
+            // dodawanie moba co 10 ture
+            if (currentTurn > 0 && currentTurn % 10 == 0)
+            {
+                Random random = new Random();
+                List<IMappable> mobsToSpawn = [new Orc("Gorbag", level: P.Level), new Goblin("Elandor", level: P.Level)];
+                int mobIndex = random.Next(mobsToSpawn.Count);
+                int x = random.Next(0, 7);
+                int y = random.Next(0, 5);
+
+                while (x == P.Position.X && y == P.Position.Y)
+                {
+                    x = random.Next(0, 7);
+                    y = random.Next(0, 5);
+                }
+
+                mobsToSpawn[mobIndex].InitMapandPosition(Map, new Point(x, y));
+                Mappables.Add(mobsToSpawn[mobIndex]);
+            }
+
+            //Console.Clear();
+            // NEXT TURN
+
+            Console.WriteLine($"TURN: {currentTurn}");
+            currentTurn++;
             this.Visualize();
             Console.WriteLine("q - wyjdź");
             Console.Write("Podaj ruch (r/l/u/d): ");
@@ -69,7 +98,8 @@ public class Game
                     inputFlag = false;
                     break;
             }
-            Console.WriteLine("============================ PLAYER =============================");
+            Console.WriteLine($"TURN: {currentTurn}");
+            Console.WriteLine("======================= PLAYER MOVE =====================");
 
 
             if (inputFlag)
@@ -78,6 +108,10 @@ public class Game
                 MoveMobs();
             }
             inputFlag = true;
+            currentTurn++;
+
+            // jakas funckja co sprawdza czy gracz i mob sa na tym samaym polu
+
         }
         return 0;
     }

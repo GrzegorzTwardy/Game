@@ -1,4 +1,6 @@
-﻿namespace Simulator;
+﻿using System;
+
+namespace Simulator;
 
 public class Elf : Creature
 {
@@ -14,6 +16,17 @@ public class Elf : Creature
     {
         get { return (8 * Level) + (2 * Agility); }
     }
+
+    public override int Resistance
+    {
+        get { return 7 * Level; }
+    }
+
+    public override int Hp
+    {
+        get { return 7 * Level; }
+    }
+
     public override string Info => $"{Name} [{Level}][{Agility}]";
 
     public Elf(string name, int level = 1, int agility = 1) : base(name, level)

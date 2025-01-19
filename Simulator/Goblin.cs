@@ -1,4 +1,6 @@
-﻿namespace Simulator;
+﻿using System;
+
+namespace Simulator;
 
 public class Goblin : Creature
 {
@@ -7,6 +9,15 @@ public class Goblin : Creature
     {
         get { return 8 * Level; }
     }
+    public override int Resistance
+    {
+        get { return 8 * Level; }
+    }
+    public override int Hp
+    {
+        get { return 7 * Level; }
+    }
+
     public override string Info => $"{Name} [{Level}]";
 
     public Goblin(string name, int level = 1) : base(name, level) { }
