@@ -22,7 +22,7 @@ public abstract class Creature : IMappable
     public int Level
     {
         get { return level; }
-        init
+        set
         {
             var tmp = value;
 

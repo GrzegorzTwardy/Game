@@ -6,11 +6,11 @@ namespace Simulator;
 public class Player : Creature
 {
     public override char Symbol { get; } = 'P';
-    private int resistance;
+    private int exp=0;
 
     public override int Resistance
     {
-        get { return resistance; }
+        get { return 8*Level; }
     }
 
     public override int Power
@@ -22,6 +22,16 @@ public class Player : Creature
         get { return 7 * Level; }
     }
 
+    public int Exp
+    {
+        get { return exp; }
+        set 
+        { 
+            exp = value;
+            CheckLevelUp();
+        }
+    }
+
     public override string Info => $"{Name} [{Level}][{Power}]";
 
     public Player(string name, int level = 1) : base(name, level) { }
@@ -30,5 +40,15 @@ public class Player : Creature
     public override string Greeting()
     {
         return $"Hi, I'm {Name}, my level is {Level}.";
+    }
+
+    private void CheckLevelUp()
+    {
+        while (exp >= 100) 
+        {
+            exp -= 100; 
+            Level++;   
+            Console.WriteLine($"Congratulations! {Name} has leveled up to Level {Level}!");
+        }
     }
 }

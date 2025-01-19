@@ -7,15 +7,15 @@ public class Goblin : Creature
     public override char Symbol { get; } = 'G';
     public override int Power
     {
-        get { return 8 * Level; }
+        get { return 5 * Level; }
     }
     public override int Resistance
     {
-        get { return 8 * Level; }
+        get { return 4 * Level; }
     }
     public override int Hp
     {
-        get { return 7 * Level; }
+        get { return 5 * Level; }
     }
 
     public override string Info => $"{Name} [{Level}]";

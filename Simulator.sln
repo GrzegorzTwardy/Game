@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Runner", "Runner\Runner.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestSimulator", "TestSimulator\TestSimulator.csproj", "{C919D5EC-77ED-4EDF-A191-83003A9DDFBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimConsole", "SimConsole\SimConsole.csproj", "{EF3977BC-D1A2-4223-A845-DF91D79C2D8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimConsole", "SimConsole\SimConsole.csproj", "{EF3977BC-D1A2-4223-A845-DF91D79C2D8E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimWeb", "SimWeb\SimWeb.csproj", "{83D5C51F-B65E-47DA-97A9-A9A0E3036C10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimWeb", "SimWeb\SimWeb.csproj", "{83D5C51F-B65E-47DA-97A9-A9A0E3036C10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
